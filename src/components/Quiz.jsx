@@ -1,7 +1,31 @@
 import { useState } from "react";
+import QUESTIONS from "../questions";
 
-export default function quiz() {
-  const [activeQuestionIndex, setActiveQuestionIndex] = useState(0);
+export default function Quiz() {
   const [userAnswer, setUserAnswer] = useState([]);
-  return <p></p>;
+  const activeQuestionIndex = userAnswer.length;
+
+  function handleSelectAnswer(selectedAnswer) {
+    console.log(selectedAnswer);
+    setUserAnswer((prevUserAns) => {
+      return [...prevUserAns, selectedAnswer];
+    });
+  }
+
+  return (
+    <div id="quiz">
+      <div id="question">
+        <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
+        <ul id="answers">
+          {QUESTIONS[activeQuestionIndex].answers.map((answer) => (
+            <li key={answer} className="answer">
+              <button onClick={() => handleSelectAnswer(answer)}>
+                {answer}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
 }
